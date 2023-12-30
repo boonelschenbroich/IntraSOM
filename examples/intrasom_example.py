@@ -42,9 +42,6 @@ def main():
 
     train(name)
 
-    if 1==1:
-        return
-
     data = pd.read_excel("data/Animais_missing.xlsx", index_col=0)
     bmus = pd.read_parquet("Results/{}_neurons.parquet".format(name))
     params = json.load(open("Results/params_{}.json".format(name), encoding='utf-8'))

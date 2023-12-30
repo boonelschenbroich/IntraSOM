@@ -1,3 +1,3 @@
-BMU 283: Baboon
-BMU 322: Hummingbird
-BMU 238: Panther
+BMU 36: Baboon
+BMU 336: Hummingbird
+BMU 249: Panther
