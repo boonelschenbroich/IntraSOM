@@ -13,10 +13,14 @@ import matplotlib.pyplot as plt
 
 
 def train(name):
-    # Load dataframe
-    data = pd.read_excel("data/Flights.xlsx", index_col=0)
-    print(data)
-    map_size = (18, 57)
+    data = pd.read_excel("data/{}.xlsx".format(name), index_col=0)
+
+    columns_to_drop = get_columns_to_drop(data)
+
+    data = data.drop(columns=columns_to_drop)
+
+    map_size = (data.shape[0], data.shape[1])
+
     som_sample = intrasom.SOMFactory.build(data,
                                            mapsize=map_size,
                                            mapshape='toroid',
@@ -38,12 +42,25 @@ def train(name):
     return som_sample
 
 
+def get_columns_to_drop(data):
+    columns_to_drop = []
+    for column in data.columns:
+        series = data[column]
+        sum = series.sum()
+
+        if sum < 20:
+            columns_to_drop.append(column)
+        ##
+    ##
+    return columns_to_drop
+
+
 def main():
-    name = "Flights"
+    name = "Flights_200"
 
-    #train(name)
+    train(name)
 
-    data = pd.read_excel("data/Flights.xlsx", index_col=0)
+    data = pd.read_excel("data/{}.xlsx".format(name), index_col=0)
     bmus = pd.read_parquet("Results/{}_neurons.parquet".format(name))
     params = json.load(open("Results/params_{}.json".format(name), encoding='utf-8'))
 
