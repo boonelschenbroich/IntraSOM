@@ -58,9 +58,17 @@ def get_columns_to_drop(data):
 def main():
     name = "Flights_200"
 
-    train(name)
+    #train(name)
 
     data = pd.read_excel("data/{}.xlsx".format(name), index_col=0)
+    columns_to_drop = get_columns_to_drop(data)
+    data = data.drop(columns=columns_to_drop)
+
+    data_proj = pd.read_excel(f'data/{name}_proj.xlsx', index_col=0)
+    print(data_proj)
+
+    data_proj = data_proj.drop(columns=columns_to_drop)
+
     bmus = pd.read_parquet("Results/{}_neurons.parquet".format(name))
     params = json.load(open("Results/params_{}.json".format(name), encoding='utf-8'))
 
@@ -98,34 +106,31 @@ def main():
                       samples_label_fontsize=8,
                       save_labels_rep=True)
 
-    # data_proj = pd.read_excel("data/Animais_proj.xlsx", index_col=0)
-    # print(data_proj)
-    #
-    # proj_data_result = som_sample.project_nan_data(data_proj=data_proj)
-    # print(proj_data_result)
-    #
-    # rep_dic = som_sample.rep_sample(save=True, project=proj_data_result)
-    # sorted_dict = dict(sorted(rep_dic.items()))
-    # print(sorted_dict)
-    #
-    # plot.plot_umatrix(figsize=(13, 2.5),
-    #                   hits=True,
-    #                   title="U-Matrix - Labeled Representative Samples",
-    #                   title_size=20,
-    #                   title_pad=20,
-    #                   legend_title="Distance",
-    #                   legend_title_size=12,
-    #                   legend_ticks_size=7,
-    #                   label_title_xy=(0, 0.5),
-    #                   save=True,
-    #                   file_name="umatrix_projected_data",
-    #                   file_path=False,
-    #                   watermark_neurons=False,
-    #                   project_samples_label=proj_data_result,
-    #                   samples_label=True,
-    #                   samples_label_index=range(19),
-    #                   samples_label_fontsize=8,
-    #                   save_labels_rep=True)
+    proj_data_result = som_sample.project_nan_data(data_proj=data_proj)
+    print(proj_data_result)
+
+    rep_dic = som_sample.rep_sample(save=True, project=proj_data_result)
+    sorted_dict = dict(sorted(rep_dic.items()))
+    print(sorted_dict)
+
+    plot.plot_umatrix(figsize=(13, 2.5),
+                      hits=True,
+                      title="U-Matrix - Labeled Representative Samples",
+                      title_size=20,
+                      title_pad=20,
+                      legend_title="Distance",
+                      legend_title_size=12,
+                      legend_ticks_size=7,
+                      label_title_xy=(0, 0.5),
+                      save=True,
+                      file_name="umatrix_flight_sample_projected_data",
+                      file_path=False,
+                      watermark_neurons=False,
+                      project_samples_label=proj_data_result,
+                      samples_label=True,
+                      samples_label_index=range(19),
+                      samples_label_fontsize=8,
+                      save_labels_rep=True)
 
 
 if __name__ == "__main__":
