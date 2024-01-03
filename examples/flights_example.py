@@ -19,7 +19,7 @@ def train(name):
 
     data = data.drop(columns=columns_to_drop)
 
-    map_size = (data.shape[0], data.shape[1])
+    map_size = (40, 40)
 
     som_sample = intrasom.SOMFactory.build(data,
                                            mapsize=map_size,
@@ -48,7 +48,7 @@ def get_columns_to_drop(data):
         series = data[column]
         sum = series.sum()
 
-        if sum < 20:
+        if sum < 10:
             columns_to_drop.append(column)
         ##
     ##
@@ -84,7 +84,6 @@ def main():
     sorted_dict = dict(sorted(rep_dic.items()))
     print(sorted_dict)
 
-    # print(som_sample.imput_missing())
     #
     plot = PlotFactory(som_sample)
 
@@ -102,9 +101,28 @@ def main():
                       file_path=False,
                       watermark_neurons=False,
                       samples_label=True,
-                      samples_label_index=range(18),
+                      samples_label_index=range(data.shape[0]),
                       samples_label_fontsize=8,
                       save_labels_rep=True)
+
+    clustering = ClusterFactory(som_sample)
+    clusters = clustering.kmeans(k=10)
+    clustering.results_cluster(clusters)
+
+    clustering.plot_kmeans(figsize=(12, 5),
+                           clusters=clusters,
+                           title_size=18,
+                           title_pad=20,
+                           umatrix=True,
+                           colormap="gist_rainbow",
+                           alfa_clust=0.5,
+                           hits=True,
+                           legend_text_size=7,
+                           cluster_outline=True,
+                           plot_labels=True,
+                           clusterout_maxtext_size=12,
+                           save=True,
+                           file_name="cluster_flight_sample_merge")
 
     proj_data_result = som_sample.project_nan_data(data_proj=data_proj)
     print(proj_data_result)
@@ -128,7 +146,7 @@ def main():
                       watermark_neurons=False,
                       project_samples_label=proj_data_result,
                       samples_label=True,
-                      samples_label_index=range(19),
+                      samples_label_index=range(data_proj.shape[0]),
                       samples_label_fontsize=8,
                       save_labels_rep=True)
 
