@@ -2110,6 +2110,7 @@ class SOM(object):
             with open(f'Results/{name}.txt', 'w', encoding='utf-8') as file:
                 for key, value in rep_samples_dic.items():
                     if isinstance(value, list):
+                        value = [str(v) for v in value]
                         value = ', '.join(value)
                     file.write(f'BMU {key+1}: {value}\n')
         

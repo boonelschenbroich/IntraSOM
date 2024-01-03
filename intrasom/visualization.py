@@ -618,6 +618,7 @@ class PlotFactory(object):
                     with open('Results/Representative_samples_umatrix.txt', 'w', encoding='utf-8') as file:
                         for key, value in rep_samples_dic_filter.items():
                             if isinstance(value, list):
+                                value = [str(v) for v in value]
                                 value = ', '.join(value)
                             file.write(f'BMU {key}: {value}\n')
                 
