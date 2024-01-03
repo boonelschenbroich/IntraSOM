@@ -1,4 +1,6 @@
 # IntraSOM Library
+import os.path
+
 import intrasom
 
 # Results Clustering and Plotting Modules
@@ -58,7 +60,10 @@ def get_columns_to_drop(data):
 def main():
     name = "Flights_200"
 
-    #train(name)
+    if not os.path.exists("Results/{}_neurons.parquet".format(name)):
+        # train if the file is missing
+        train(name)
+    ##
 
     data = pd.read_excel("data/{}.xlsx".format(name), index_col=0)
     columns_to_drop = get_columns_to_drop(data)
@@ -107,7 +112,7 @@ def main():
 
     clustering = ClusterFactory(som_sample)
     clusters = clustering.kmeans(k=10)
-    clustering.results_cluster(clusters)
+    clustering.results_cluster(clusters, savetype='xlsx')
 
     clustering.plot_kmeans(figsize=(12, 5),
                            clusters=clusters,

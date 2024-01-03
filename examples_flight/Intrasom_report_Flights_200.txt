@@ -1,15 +1,15 @@
 IntraSOM Training Report
-Project: Flights
+Project: Flights_200
 
 Input Data:
-Features: 57
-Samples: 18
-Cells: 1026
+Features: 175
+Samples: 200
+Cells: 35000
 
 --------------------------------------------------
 Initialization Parameters:
 
-Map Size: 18 columns and 58 lines
+Map Size: 40 columns and 40 lines
 Training Polygon: Toroid
 Lattice: Hexagonal
 Normalization: Variance
@@ -21,17 +21,17 @@ Number of Labels: 0
 Training Parameters:
 
 Rough Training:
-Size: 2000
-Initial Ratio: 20.0
-Final Ratio: 5.0
+Size: 480
+Initial Ratio: 14.0
+Final Ratio: 3.5
 
 Finetube Training:
-Size: 2000
-Initial Ratio: 7.25
+Size: 800
+Initial Ratio: 5.0
 Final Ratio: 1
 
 --------------------------------------------------
 Training Evaluation:
 
-Quantization Error: 0.0
-Topographic Error: 0.0
+Quantization Error: 1.1391
+Topographic Error: 0.025
